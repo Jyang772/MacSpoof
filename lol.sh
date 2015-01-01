@@ -1,25 +1,35 @@
 #! /bin/zsh
-#Run sudo nmap -sP "IP RANGE"/24 > file beforehand
 
+IP=$(ifconfig wlan0 | grep "inet addr:" | tr -d A-z: | awk {'print $1'})
 
-#addrList="3c:a9:f4:49:97:ed"
-addrList=$(cat file | grep -v Unknown | grep MAC Address | awk '{print $3}')
+echo $IP
+
+sudo nmap -sP $IP/24 > lol
+cat lol
+
+echo "done!"
+#exit 0;
+
+addrList="e4:ce:5a:6a:14:c8:68"
+#addrList=$(cat lol | grep "MAC Address" | grep -v Unknown | grep -v Clear | awk '{print $3}')
 echo "$addrList"
 
 while read ether; do
         echo $ether
-        sudo ifconfig wlan0 down
-        sudo ifconfig wlan0 hw ether $ether
-        sudo ifconfig wlan0 up
-        #ip link
+        #sudo ifconfig wlan0 down hw ether $ether
+        #sudo ifconfig wlan0 up
+	sudo ip link set wlan0 down
+	sudo ip link set wlan0 address $ether
+	sudo ip link set wlan0 up
+	sudo killall -9 wpa_supplicant
+	sleep 5
+	sudo wpa_supplicant -D nl80211 -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf -B
         sudo dhclient -r
-        #ps -ax | grep wpa | awk '{print $1}' | xargs sudo kill -v
-        #sudo wpa_supplicant -D nl80211 -i wlp2s0 -c /etc/wpa_supplicant/royal.conf -B
         sudo dhclient -v wlan0
         if [ $(curl -I www.google.com >/dev/null | grep -ic "200") != "0" ]; then
                 exit 0
-        else
-             wpa_cli reassociate
+        #else
+         #     wpa_cli reassociate
 
         fi
 done <<< "$addrList"
