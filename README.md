@@ -3,8 +3,10 @@ MacSpoof
 
 Utilizes nmap, dhclient, and wpa_supplicant
 
+<p><a href="url"><img src="http://i.imgur.com/upABDr6.jpg" height="600" width="480" ></a></p>
 
 ========
+
 
 Chances are that aboard a cruise ship with a maximum capacity of 5,000+ people, a few dozen will have already purchased an internet package. What we want to do is spoof our computer’s MAC Address to match that of those computers who are already connected to the network. If a computer is logged in and has access to the internet, any computer with the same MAC Address will have access to the internet as well. This means we can "piggy-back" on someone else's package. AND, if they only paid for one device, it won't kick them off. 
 
