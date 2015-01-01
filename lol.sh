@@ -10,8 +10,8 @@ cat lol
 echo "done!"
 #exit 0;
 
-addrList="e4:ce:5a:6a:14:c8:68"
-#addrList=$(cat lol | grep "MAC Address" | grep -v Unknown | grep -v Clear | awk '{print $3}')
+#addrList="e4:ce:5a:6a:14:c8:68"
+addrList=$(cat lol | grep "MAC Address" | grep -v Unknown | grep -v Clear | awk '{print $3}')
 echo "$addrList"
 
 while read ether; do
